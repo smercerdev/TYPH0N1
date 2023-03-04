@@ -3,4 +3,4 @@ project(TYPH0N1)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(TYPH0N1 main.cpp)
+add_executable(TYPH0N1 main.cpp globals.h bitboard.cpp)

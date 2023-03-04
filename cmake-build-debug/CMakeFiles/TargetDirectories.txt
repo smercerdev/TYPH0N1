@@ -1,3 +1,0 @@
-/Users/sammercer/CLionProjects/TYPH0N1/cmake-build-debug/CMakeFiles/TYPH0N1.dir
-/Users/sammercer/CLionProjects/TYPH0N1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/sammercer/CLionProjects/TYPH0N1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
