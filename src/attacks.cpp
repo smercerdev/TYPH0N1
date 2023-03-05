@@ -20,6 +20,8 @@ TBC
 U64 pawn_attacks[2][64];
 // Knight attacks table
 U64 knight_attacks[64];
+// King attacks table
+U64 king_attacks[64];
 
 // Initialize attacks for leapers
 void init_leapers_attacks() {
@@ -29,6 +31,8 @@ void init_leapers_attacks() {
         pawn_attacks[black][square] = gen_pawn_attacks(black, square);
         // Initialize knight attacks
         knight_attacks[square] = gen_knight_attacks(square);
+        // Initialize king attacks
+        king_attacks[square] = gen_king_attacks(square);
     }
 }
 
@@ -80,6 +84,36 @@ U64 gen_knight_attacks(int square) {
     // NW attacks
     if ((bitboard << 10) & not_ab_file) attacks |= (bitboard << 10);
     if ((bitboard << 17) & not_a_file) attacks |= (bitboard << 17);
+
+    // Return attacks map
+    return attacks;
+}
+
+// Generate king attacks
+U64 gen_king_attacks(int square) {
+    // Resulting attacks for the king
+    U64 attacks = 0ULL;
+
+    // Set king position
+    U64 bitboard = 0ULL;
+    set_bit(bitboard, square);
+
+    // SE attack
+    if ((bitboard >> 9) & not_h_file) attacks |= (bitboard >> 9);
+    // E attack
+    if ((bitboard >> 1) & not_h_file) attacks |= (bitboard >> 1);
+    // NE attack
+    if ((bitboard << 7) & not_h_file) attacks |= (bitboard << 7);
+    // N attack
+    if ((bitboard << 8)) attacks |= (bitboard << 8);
+    // SW attack
+    if ((bitboard >> 7) & not_a_file) attacks |= (bitboard >> 7);
+    // W attack
+    if ((bitboard << 1) & not_a_file) attacks |= (bitboard << 1);
+    // NW attack
+    if ((bitboard << 9) & not_a_file) attacks |= (bitboard << 9);
+    // S attack
+    if ((bitboard >> 8)) attacks |= (bitboard >> 8);
 
     // Return attacks map
     return attacks;

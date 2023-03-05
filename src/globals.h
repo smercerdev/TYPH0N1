@@ -53,6 +53,8 @@ const U64 not_ab_file = 18229723555195321596ULL;
 extern U64 pawn_attacks[2][64];
 // Declare knight attacks table
 extern U64 knight_attacks[64];
+// Declare king attacks table
+extern U64 king_attacks[64];
 
 /*
  * DEFINE MACROS
@@ -78,6 +80,8 @@ void init_leapers_attacks();
 U64 gen_pawn_attacks(int side, int square);
 
 U64 gen_knight_attacks(int square);
+
+U64 gen_king_attacks(int square);
 
 
 
