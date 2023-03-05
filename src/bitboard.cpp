@@ -17,7 +17,7 @@ TBC
  */
 
 // Print bitboard for debugging
-void print_bitboard(BITBOARD bitboard) {
+void print_bitboard(U64 bitboard) {
     printf("\n");
     // Loop through ranks
     for (int rank = 0; rank < 8; rank++) {
