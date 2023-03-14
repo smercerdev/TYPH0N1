@@ -83,6 +83,14 @@ U64 gen_knight_attacks(int square);
 
 U64 gen_king_attacks(int square);
 
+U64 mask_bishop_attacks(int square);
+
+U64 mask_rook_attacks(int square);
+
+U64 gen_bishop_attacks(int square, U64 blockers);
+
+U64 gen_rook_attacks(int square, U64 blockers);
+
 
 
 

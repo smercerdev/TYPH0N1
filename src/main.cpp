@@ -18,11 +18,14 @@ TBC
  */
 
 int main() {
-    init_leapers_attacks();
+    U64 blockers = 0ULL;
+    set_bit(blockers, B4);
+    set_bit(blockers, D5);
+    set_bit(blockers, G4);
+    set_bit(blockers, D2);
 
-    for (int square = 0; square < 64; square++) {
-        print_bitboard(king_attacks[square]);
-    }
+    print_bitboard(gen_rook_attacks(D4, blockers));
+
     return 0;
 }
 

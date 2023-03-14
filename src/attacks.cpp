@@ -118,3 +118,131 @@ U64 gen_king_attacks(int square) {
     // Return attacks map
     return attacks;
 }
+
+/*
+ * SLIDERS ATTACKS
+ */
+
+// Mask relevant bishop occupancy bits (for magic bitboards)
+U64 mask_bishop_attacks(int square) {
+    // Resulting attacks for the bishop (excludes edge of board and blockers)
+    U64 attacks = 0ULL;
+
+    // Initialize rank and file
+    int r, f;
+
+    // Initialize target rank and file
+    int tr = square / 8;
+    int tf = square % 8;
+
+    // SE
+    for (r = tr + 1, f = tf + 1; r < 7 && f < 7; r++, f++) attacks |= (1ULL << (r * 8 + f));
+    // NE
+    for (r = tr - 1, f = tf + 1; r > 0 && f < 7; r--, f++) attacks |= (1ULL << (r * 8 + f));
+    // SW
+    for (r = tr + 1, f = tf - 1; r < 7 && f > 0; r++, f--) attacks |= (1ULL << (r * 8 + f));
+    // NW
+    for (r = tr - 1, f = tf - 1; r > 0 && f > 0; r--, f--) attacks |= (1ULL << (r * 8 + f));
+
+    // Return attacks map
+    return attacks;
+}
+
+// Mask relevant rook occupancy bits (for magic bitboards)
+U64 mask_rook_attacks(int square) {
+    // Resulting attacks for the rook (excludes edge of board and blockers)
+    U64 attacks = 0ULL;
+
+    // Initialize rank and file
+    int r, f;
+
+    // Initialize target rank and file
+    int tr = square / 8;
+    int tf = square % 8;
+
+    // S
+    for (r = tr + 1; r < 7; r++) attacks |= (1ULL << (r * 8 + tf));
+    // N
+    for (r = tr - 1; r > 0; r--) attacks |= (1ULL << (r * 8 + tf));
+    // E
+    for (f = tf + 1; f < 7; f++) attacks |= (1ULL << (tr * 8 + f));
+    // W
+    for (f = tf - 1; f > 0; f--) attacks |= (1ULL << (tr * 8 + f));
+
+    // Return attacks map
+    return attacks;
+}
+
+// Generate bishop attacks on the fly (for magic bitboards)
+U64 gen_bishop_attacks(int square, U64 blockers) {
+    // Resulting attacks for the bishop
+    U64 attacks = 0ULL;
+
+    // Initialize rank and file
+    int r, f;
+
+    // Initialize target rank and file
+    int tr = square / 8;
+    int tf = square % 8;
+
+    // SE
+    for (r = tr + 1, f = tf + 1; r < 8 && f < 8; r++, f++) {
+        attacks |= (1ULL << (r * 8 + f));
+        if (get_bit(blockers, r * 8 + f)) break;
+    }
+    // NE
+    for (r = tr - 1, f = tf + 1; r >= 0 && f < 8; r--, f++) {
+        attacks |= (1ULL << (r * 8 + f));
+        if (get_bit(blockers, r * 8 + f)) break;
+    }
+    // SW
+    for (r = tr + 1, f = tf - 1; r < 8 && f >= 0; r++, f--) {
+        attacks |= (1ULL << (r * 8 + f));
+        if (get_bit(blockers, r * 8 + f)) break;
+    }
+    // NW
+    for (r = tr - 1, f = tf - 1; r >= 0 && f >= 0; r--, f--) {
+        attacks |= (1ULL << (r * 8 + f));
+        if (get_bit(blockers, r * 8 + f)) break;
+    }
+
+    // Return attacks map
+    return attacks;
+}
+
+// Generate rook attacks on the fly (for magic bitboards)
+U64 gen_rook_attacks(int square, U64 blockers) {
+    // Resulting attacks for the rook
+    U64 attacks = 0ULL;
+
+    // Initialize rank and file
+    int r, f;
+
+    // Initialize target rank and file
+    int tr = square / 8;
+    int tf = square % 8;
+
+    // S
+    for (r = tr + 1; r < 8; r++) {
+        attacks |= (1ULL << (r * 8 + tf));
+        if (get_bit(blockers, r * 8 + tf)) break;
+    }
+    // N
+    for (r = tr - 1; r >= 0; r--) {
+        attacks |= (1ULL << (r * 8 + tf));
+        if (get_bit(blockers, r * 8 + tf)) break;
+    }
+    // E
+    for (f = tf + 1; f < 8; f++) {
+        attacks |= (1ULL << (tr * 8 + f));
+        if (get_bit(blockers, tr * 8 + f)) break;
+    }
+    // W
+    for (f = tf - 1; f >= 0; f--) {
+        attacks |= (1ULL << (tr * 8 + f));
+        if (get_bit(blockers, tr * 8 + f)) break;
+    }
+
+    // Return attacks map
+    return attacks;
+}
